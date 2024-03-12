@@ -1,17 +1,45 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
-type Message struct {
-	Name    string `json:"name,omitempty"`
-	Type    int
-	content string
+func main() {
+	//////////////////////////////////// json 库 ////////////////////////////////////
+	jsonFunc()
+
+	//////////////////////////////////// log 库 ////////////////////////////////////
+	logFunc()
+
 }
 
-func main() {
+func logFunc() {
+	// 创建默认的标准logger
+	logger := log.Default()
+
+	// 获取默认logger的flag配置
+	flag := logger.Flags()
+	fmt.Println("default log flag: ", flag)
+	logger.Println("default logger message")
+
+	// 指定logger输出的Writer
+	var buf bytes.Buffer
+	custLogger := log.New(&buf, "testPrefix", log.Lmicroseconds)
+	custLogger.Println("test log message")
+	fmt.Println(string(buf.Bytes()))
+}
+
+func jsonFunc() {
+
+	type Message struct {
+		Name    string `json:"name,omitempty"`
+		Type    int
+		content string
+	}
+
 	// json 序列化结构体对象
 	message := Message{Name: "testName", Type: 3, content: "content message"}
 	v, err := json.Marshal(message)
