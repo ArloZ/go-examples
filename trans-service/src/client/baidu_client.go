@@ -24,7 +24,7 @@ func (client *BaiduTransClient) Init() error {
 	client.appId = os.Getenv("BAIDU_TRANS_APP_ID")
 	client.appKey = os.Getenv("BAIDU_TRANS_APP_KEY")
 
-	logger.Info("laod baidu translate client success: ", client.appId)
+	logger.Infof("laod baidu translate client success: %v", client.appId)
 	return nil
 }
 
